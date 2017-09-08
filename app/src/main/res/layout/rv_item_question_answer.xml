@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="72dp">
+
+        <View
+            android:id="@+id/view_block"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/rv_item_question_answer_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="A"
+            android:textColor="#00bcdf"
+            android:textSize="38sp"
+            android:layout_alignTop="@+id/view_block"
+            android:layout_toRightOf="@+id/view_block"
+            android:layout_toEndOf="@+id/view_block"
+            android:layout_alignBottom="@+id/view_block" />
+
+        <TextView
+            android:id="@+id/rv_item_question_answer_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/rv_item_question_answer_number"
+            android:gravity="center"
+            android:text="answer_item"
+            android:textColor="#333"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/rv_item_question_answer_number"
+            android:layout_alignBottom="@+id/rv_item_question_answer_number" />
+
+
+
+    <View
+        android:id="@+id/v_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#aaaaaa"
+        android:layout_alignBottom="@+id/rv_item_question_answer_item"
+        android:layout_alignLeft="@+id/view_block"
+        android:layout_alignStart="@+id/view_block" />
+
+    </RelativeLayout>
+

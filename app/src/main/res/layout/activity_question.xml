@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="xyz.kfdykme.mobistudi.question.QuestionActivity"
+    android:orientation="vertical">
+
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:weightSum="1"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5.93"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+
+            android:gravity="right">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="100dp"
+                android:layout_marginLeft="100dp">
+
+            </Spinner>
+            </android.support.v7.widget.Toolbar>
+
+        <TextView
+        android:id="@+id/activity_question_question_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+            android:layout_margin="20dp"
+        android:text="没有题目"
+        android:textSize="23sp"
+        />
+    </android.support.design.widget.AppBarLayout>
+
+
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/activity_question_answer_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/tv_check"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="right|bottom"
+        android:background="@color/colorPrimary"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="20dp"
+        android:gravity="center"
+        android:text="@string/next_problem"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        />
+    <!--<LinearLayout-->
+        <!--android:layout_width="368dp"-->
+        <!--android:layout_height="495dp"-->
+        <!--android:orientation="vertical"-->
+        <!--tools:layout_editor_absoluteY="8dp"-->
+        <!--tools:layout_editor_absoluteX="8dp">-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/activity_question_tab_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="15dp"-->
+                <!--android:text="题目："-->
+                <!--android:textSize="16sp"-->
+                <!--/>-->
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/activity_question_question_rv"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp">-->
+
+            <!--</android.support.v7.widget.RecyclerView>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/activity_question_question_description"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="10dp"-->
+                <!--android:text="Quesiont Description\ndsada\ndas"-->
+                <!--android:textSize="16sp"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:background="#333"/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/activity_question_detail_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:background="#99eeeeee">-->
+
+
+
+
+
+
+                <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+
+
+</LinearLayout>
