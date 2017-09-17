@@ -2,11 +2,14 @@ package cat.mobistudi;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +20,12 @@ import android.widget.Toast;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
+import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import chinaykc.mobistudi.R;
 import okhttp3.Call;
@@ -50,12 +56,13 @@ public class CAT extends AppCompatActivity {
     double y_cur = 0;
     double x = 0;//初始的能力值
     double step = 0.01;//每次迭代的步长
+    private String abilityStorage = null;//缓存中
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat);
-        //LitePal.initialize(this);
+        LitePal.initialize(this);
 
         //创建能力值数据库
         dbHelper = new CreateDBAbility(getApplicationContext(),"Ability.db",null,4);
@@ -110,27 +117,48 @@ public class CAT extends AppCompatActivity {
             }
         });
         hasLearn.show();
-        if (hasLearned == 1){
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CAT.this);
+        abilityStorage = preferences.getString("ability",null);
+        if (!TextUtils.isEmpty(abilityStorage)){
+            difficulty = Double.parseDouble(abilityStorage);
+            if (difficulty < 0.0)
+                difficulty = 0.0;
+            requestQuestion(courseId,difficulty);
+        }else if (hasLearned == 1){
             difficulty = 0.80;
             requestQuestion(courseId,difficulty);
         }
+        if (!TextUtils.isEmpty(abilityStorage)){
+            difficulty = Double.parseDouble(abilityStorage);
+            if (difficulty < 0.0)
+                difficulty = 0.0;
+            requestQuestion(courseId,difficulty);
+        }else
         if (hasLearned == 0){
             difficulty = 0.80;
             requestQuestion(courseId,difficulty);
         }
+        Log.i("测试",""+difficulty);
 
         next_Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //int progress = progress_test.getProgress();
 
+                DecimalFormat df = new DecimalFormat("0.00");
+                df.setRoundingMode(RoundingMode.HALF_UP);
                 progress = progress + 5;
                 //progress_test.setProgress(progress);
                 progress1.setProgress(progress);
                 if (progress >= 100){
+                    String abilityTemp = Double.toString(x);
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(CAT.this).edit();
+                    editor.putString("ability",abilityTemp);
+                    editor.commit();
                     AlertDialog.Builder dialog = new AlertDialog.Builder(CAT.this);
                     dialog.setTitle("CAT");
-                    dialog.setMessage("您已经完成了测试,能力值: " + x);
+                    dialog.setMessage("您已经完成了测试,能力值: " + df.format(x) + "max=5");
                     dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -233,7 +261,7 @@ public class CAT extends AppCompatActivity {
     public void requestQuestion(final int courseId,final double difficulty){
 
         //Log.d("测试","请求数据");
-        String courseUrl = "http://www.mobistudi.mobi/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
+        String courseUrl = "http://210.41.102.190/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
         //Log.d("测试",courseUrl);
         HttpUtil.sendOKHttpRequest(courseUrl, new Callback() {
             @Override
