@@ -288,11 +288,11 @@ public class CAT extends AppCompatActivity {
                         public void run() {
                             Question question= DataSupport.findLast(Question.class);
                             //Log.d("测试3333333",question.getDescription());
-                            textContent.setText(question.getDescription());
-                            textContent_A.setText(question.getA());
-                            textContent_B.setText(question.getB());
-                            textContent_C.setText(question.getC());
-                            textContent_D.setText(question.getD());
+                            //textContent.setText(question.getDescription());
+//                            textContent_A.setText(question.getA());
+//                            textContent_B.setText(question.getB());
+//                            textContent_C.setText(question.getC());
+//                            textContent_D.setText(question.getD());
                             correct_answer = question.getCorrect();
                         }
                     });
