@@ -38,7 +38,8 @@
             android:id="@+id/textContent"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:background="#FAF0E6"/>
 
         <View
             android:layout_width="match_parent"
@@ -62,8 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
+                android:buttonTint="#B22222"
                 android:text="A"
-                android:textSize="0sp"/>
+                android:textSize="0sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_B"
@@ -72,7 +74,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:text="B"
-                android:textSize="0sp"/>
+                android:textSize="0sp"
+                android:buttonTint="#B22222"/>
 
             <RadioButton
                 android:id="@+id/radioButton_C"
@@ -81,7 +84,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:text="C"
-                android:textSize="0sp"/>
+                android:textSize="0sp"
+                android:buttonTint="#B22222"/>
 
             <RadioButton
                 android:id="@+id/radioButton_D"
@@ -90,37 +94,43 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:text="D"
-                android:textSize="0sp"/>
+                android:textSize="0sp"
+                android:buttonTint="#B22222"/>
 
         </RadioGroup>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp">
             <TextView
                 android:id="@+id/content_A"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:background="#FAF0E6"/>
 
             <TextView
                 android:id="@+id/content_B"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:background="#FAF0E6"/>
 
             <TextView
                 android:id="@+id/content_C"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:background="#FAF0E6"/>
 
             <TextView
                 android:id="@+id/content_D"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:background="#FAF0E6"/>
         </LinearLayout>
     </LinearLayout>
 
