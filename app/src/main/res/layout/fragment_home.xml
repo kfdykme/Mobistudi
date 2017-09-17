@@ -91,7 +91,7 @@
                             android:id="@+id/catButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CAT测试"
+                            android:text="水平测试"
                             android:background="@null"/>
                     </LinearLayout>
                 </LinearLayout>
