@@ -261,7 +261,7 @@ public class CAT extends AppCompatActivity {
     public void requestQuestion(final int courseId,final double difficulty){
 
         //Log.d("测试","请求数据");
-        String courseUrl = "http://211.83.110.10/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
+        String courseUrl = "http://210.41.102.190/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
         //Log.d("测试",courseUrl);
         HttpUtil.sendOKHttpRequest(courseUrl, new Callback() {
             @Override
