@@ -155,7 +155,8 @@
                             android:layout_height="wrap_content"
                             android:text="2.线性表"
                             android:padding="15dp"/>
-                        <ImageView
+                        <Button
+                            android:id="@+id/button_2"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/done" />

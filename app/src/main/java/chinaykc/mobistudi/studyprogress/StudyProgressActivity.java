@@ -23,7 +23,15 @@ public class StudyProgressActivity extends AppCompatActivity {
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudyProgressActivity.this, Progress.class);
+                Intent intent = new Intent(StudyProgressActivity.this, CourseStudyProgress.class);
+                startActivity(intent);
+            }
+        });
+        Button button_2 = (Button) findViewById(R.id.button_2);
+        button_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudyProgressActivity.this, CourseStudyProgress.class);
                 startActivity(intent);
             }
         });

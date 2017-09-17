@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/Users/kf/Documents/WorkPlace/Mobistudi/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="C:\Users\china\Desktop\mobistudi_hebing\Mobistudi-1\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/kf/Documents/WorkPlace/Mobistudi/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_13eb5506cfc097daf699f5e06e301033bd3587c5/classes.dex" />
+        <dex dex="C:\Users\china\Desktop\mobistudi_hebing\Mobistudi-1\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e49ea23ac701def74d7773904d1e2c5fb56c8173\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/kf/Documents/WorkPlace/Mobistudi/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="C:\Users\china\Desktop\mobistudi_hebing\Mobistudi-1\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="cb2dacf4c92800b112660e20425bbcdaabf4d2f8">
-        <dex dex="/Users/kf/Documents/WorkPlace/Mobistudi/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_97aaa4f5814dd6496f70b2e8b37d136c83d5fe70/classes.dex" />
+        sha1="c32aaf4dd62e39fe736748e555084867a396c1aa">
+        <dex dex="C:\Users\china\Desktop\mobistudi_hebing\Mobistudi-1\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_52aa0a2582d4d6853ecae7bf25ddd3a4c104daf7\classes.dex" />
     </item>
 
 </items>

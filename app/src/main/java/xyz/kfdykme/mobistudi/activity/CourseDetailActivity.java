@@ -1,5 +1,6 @@
 package xyz.kfdykme.mobistudi.activity;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -99,6 +102,13 @@ public class CourseDetailActivity extends MobiActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        VideoView videoView = (VideoView)this.findViewById(R.id.video1 );
+        //videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.about));
+        videoView.setVideoURI(Uri.parse("http://www.earofsky.com/Public/Home/videos/index.mp4"));
+        videoView.setMediaController(new MediaController(this));
+        videoView.start();
+        videoView.requestFocus();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

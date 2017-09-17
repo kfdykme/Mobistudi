@@ -88,7 +88,9 @@
         <activity android:name="cat.mobistudi.CAT" />
         <activity android:name=".AboutUs" />
         <activity android:name=".studyprogress.Progress" />
-        <activity android:name="xyz.kfdykme.mobistudi.structmap.settings.StructMapSettingsActivity"></activity>
+        <activity android:name="xyz.kfdykme.mobistudi.structmap.settings.StructMapSettingsActivity" />
+        <activity android:name=".studyprogress.CourseStudyProgress" />
+        <activity android:name=".studyprogress.WebViewTest"></activity>
     </application>
 
 </manifest>
