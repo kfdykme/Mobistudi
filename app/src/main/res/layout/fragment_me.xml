@@ -198,9 +198,10 @@
                     android:layout_toRightOf="@id/user"
                     android:layout_below="@id/username"></FrameLayout>
                 <Button
+                    android:id="@+id/myLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="我的水平"
                     android:textColor="#666666"
                     android:layout_marginLeft="24dp"
                     android:background="@null"

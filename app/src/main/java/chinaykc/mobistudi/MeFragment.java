@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import cat.mobistudi.MyLevel;
 import xyz.kfdykme.mobistudi.activity.CourseListActivity;
 import xyz.kfdykme.mobistudi.history.HistoryActivity;
 
@@ -57,7 +58,14 @@ public class MeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        Button myLevel = (Button) view.findViewById(R.id.myLevel);
+        myLevel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyLevel.class);
+                startActivity(intent);
+            }
+        });
 
 
 

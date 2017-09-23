@@ -1,7 +1,9 @@
 package cat.mobistudi;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,20 +39,19 @@ public class CAT extends AppCompatActivity {
     private int hasLearned = 0;
     private double difficulty;
     private Button next_Question;
-    //private ProgressBar progress_test;
     private NumberProgressBar progress1;
     private RadioGroup radioGroup_answer;
     private String correct_answer = "";
     private RadioButton radioButton_checked;
+    private RadioButton radioButton_A;
+    private RadioButton radioButton_B;
+    private RadioButton radioButton_C;
+    private RadioButton radioButton_D;
     private TextView textContent;
-    private TextView textContent_A;
-    private TextView textContent_B;
-    private TextView textContent_C;
-    private TextView textContent_D;
-    private int courseId = 1;//暂定
+    private int courseId = 2;//暂定
     private CreateDBAbility dbHelper;
     SQLiteDatabase db;
-    private int correntNum = 0;
+    private int correctNum = 0;
     int progress = 0;
 
     double y_cur = 0;
@@ -67,35 +68,17 @@ public class CAT extends AppCompatActivity {
         //创建能力值数据库
         dbHelper = new CreateDBAbility(getApplicationContext(),"Ability.db",null,4);
         db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query("Ability",null,null,null,null,null,null);
-        if (cursor.moveToFirst()){
-            do {
-                Double dif = Double.valueOf(cursor.getString(cursor.getColumnIndex("difficult")).toString());
-                Log.d("未删除数据库中","difficult: " + dif);
-            }while (cursor.moveToNext());
-        }
-        cursor.close();
         db.delete("Ability",null,null);
-        Cursor cursor2 = db.query("Ability",null,null,null,null,null,null);
-        if (cursor2.moveToFirst()){
-            do {
-                Double dif = Double.valueOf(cursor2.getString(cursor2.getColumnIndex("difficult")).toString());
-                Log.d("删除后数据库中 ","difficult: " + dif);
-            }while (cursor2.moveToNext());
-        }
-        cursor2.close();
-
-        Log.d("测试111111 ","删除数据成功并创建数据库成功");
+        //Log.d("测试111111 ","删除数据成功并创建数据库成功");
 
         next_Question = (Button) findViewById(R.id.next_question);
-        //progress_test = (ProgressBar) findViewById(R.id.progress_test);
         progress1 = (NumberProgressBar) findViewById(R.id.progress);
         radioGroup_answer = (RadioGroup) findViewById(R.id.radioGroup_answer);
         textContent = (TextView) findViewById(R.id.textContent);
-        textContent_A = (TextView) findViewById(R.id.content_A);
-        textContent_B = (TextView) findViewById(R.id.content_B);
-        textContent_C = (TextView) findViewById(R.id.content_C);
-        textContent_D = (TextView) findViewById(R.id.content_D);
+        radioButton_A = (RadioButton) findViewById(R.id.A);
+        radioButton_B = (RadioButton) findViewById(R.id.B);
+        radioButton_C = (RadioButton) findViewById(R.id.C);
+        radioButton_D = (RadioButton) findViewById(R.id.D);
 
         //询问是否学习过该门课程
         AlertDialog.Builder hasLearn = new AlertDialog.Builder(CAT.this);
@@ -106,6 +89,8 @@ public class CAT extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 hasLearned = 1;
+                difficulty = 1.38;
+                requestQuestion(courseId,difficulty);
                 dialogInterface.dismiss();
             }
         });
@@ -113,6 +98,8 @@ public class CAT extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 hasLearned = 0;
+                difficulty = 0.86;
+                requestQuestion(courseId,difficulty);
                 dialogInterface.dismiss();
             }
         });
@@ -125,55 +112,12 @@ public class CAT extends AppCompatActivity {
             if (difficulty < 0.0)
                 difficulty = 0.0;
             requestQuestion(courseId,difficulty);
-        }else if (hasLearned == 1){
-            difficulty = 0.80;
-            requestQuestion(courseId,difficulty);
         }
-        if (!TextUtils.isEmpty(abilityStorage)){
-            difficulty = Double.parseDouble(abilityStorage);
-            if (difficulty < 0.0)
-                difficulty = 0.0;
-            requestQuestion(courseId,difficulty);
-        }else
-        if (hasLearned == 0){
-            difficulty = 0.80;
-            requestQuestion(courseId,difficulty);
-        }
-        Log.i("测试",""+difficulty);
+        Log.i("请求试题难度",""+difficulty);
 
         next_Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //int progress = progress_test.getProgress();
-
-                DecimalFormat df = new DecimalFormat("0.00");
-                df.setRoundingMode(RoundingMode.HALF_UP);
-                progress = progress + 5;
-                //progress_test.setProgress(progress);
-                progress1.setProgress(progress);
-                if (progress >= 100){
-                    String abilityTemp = Double.toString(x);
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(CAT.this).edit();
-                    editor.putString("ability",abilityTemp);
-                    editor.commit();
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(CAT.this);
-                    dialog.setTitle("CAT");
-                    dialog.setMessage("您已经完成了测试,能力值: " + df.format(x) + "max=5");
-                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            DataSupport.deleteAll(Question.class);
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
 
                 for (int i=0; i < radioGroup_answer.getChildCount();i++){
 
@@ -181,8 +125,12 @@ public class CAT extends AppCompatActivity {
                     radioButton_checked = (RadioButton) radioGroup_answer.getChildAt(i);
 
                     if (radioButton_checked.isChecked()){
-                        if (radioButton_checked.getText().equals(correct_answer)){
-                            Question selectedQuestions = DataSupport.findLast(Question.class);
+                        Question selectedQuestions = DataSupport.findLast(Question.class);
+                        String choiceNum = String.valueOf(radioButton_checked.getText().charAt(0)).trim();
+                        Log.d("选择的内容",""+radioButton_checked.getText());
+                        Log.d("选择的选项",choiceNum);
+                        Log.d("正确选项",correct_answer);
+                        if (choiceNum.equals(correct_answer.trim())){
                             values.put("discrimination",selectedQuestions.getDistinction());
                             values.put("difficult",difficulty);
                             values.put("result",1);
@@ -191,12 +139,12 @@ public class CAT extends AppCompatActivity {
                             Theat theat = new Theat();
                             theat.getmin();
                             Log.d("做对之后的","能力值" + x);
-                            difficulty = difficulty + 0.2;
+                            difficulty = difficulty + 0.08;
                             Log.d("做对之后的","难度" + difficulty);
-                            correntNum ++;
-                            Log.d("做对试题数:" ,"" + correntNum);
+                            correctNum ++;
+                            Log.d("做对试题数:" ,"" + correctNum);
+                            changeProgress();
                         }else{
-                            Question selectedQuestions = DataSupport.findLast(Question.class);
                             values.put("discrimination",selectedQuestions.getDistinction());
                             values.put("difficult",difficulty);
                             values.put("result",0);
@@ -205,26 +153,50 @@ public class CAT extends AppCompatActivity {
                             Theat theat = new Theat();
                             theat.getmin();
                             Log.d("做错之后的","能力值：" + x );
-                            difficulty = difficulty - 0.1;
+                            SharedPreferences.Editor editor = getSharedPreferences("errorText", Context.MODE_APPEND).edit();
+                            Log.d("错误试题内容",selectedQuestions.getDescription());
+                            editor.putString("errorText",selectedQuestions.getDescription());
+                            editor.apply();
+                            difficulty = difficulty - 0.04;
                             Log.d("做错之后的","难度" + difficulty);
+                            changeProgress();
                         }
                         //解决难度到达边界的情况
-                        if (difficulty<0){
-                            difficulty = 0.00;
-                        }else if (difficulty > 2){
-                            difficulty = 1.50;
+                        if (difficulty<0.58){
+                            difficulty = 0.78;
+                        }else if (difficulty > 1.9){
+                            difficulty = 1.56;
                         }
                     }
                 }
-                Log.d("请求题目的难度:" , "" + difficulty);
+                //Log.d("请求题目的难度:" , "" + difficulty);
                 requestQuestion(courseId,difficulty);
                 radioGroup_answer.clearCheck();
             }
         });
     }
 
+    private void changeProgress() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        progress = progress + 5;
+        if (progress > 100){
+            //String abilityTemp = Double.toString(x);
+            String ability = df.format(x);
+            SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
+            editor.putString("theat",ability);
+            Log.d("最后正确题目数",""+correctNum);
+            editor.putInt("correctNum",correctNum);
+            editor.apply();
+            Intent intent = new Intent(getApplicationContext(),CATResult.class);
+            startActivity(intent);
+            finish();
+        }
+        progress1.setProgress(progress);
+    }
+
     //计算能力值
-    class Theat{
+    private class Theat{
 
         public double derivative(double difficult, double discrimination, int result, double x){
             double temp=0.0;
@@ -260,9 +232,8 @@ public class CAT extends AppCompatActivity {
     //根据courseId和difficulty请求获得测验的问题
     public void requestQuestion(final int courseId,final double difficulty){
 
-        //Log.d("测试","请求数据");
-        String courseUrl = "http://210.41.102.190/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
-        //Log.d("测试",courseUrl);
+        String courseUrl = "http://202.115.29.226/distinction.php?course_id=" + courseId + "&" + "difficulty=" +  difficulty;
+        Log.d("测试URL",courseUrl);
         HttpUtil.sendOKHttpRequest(courseUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -278,21 +249,19 @@ public class CAT extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 String responseText = response.body().string();
-                //Log.d("测试1111111",responseText);
                 Boolean result = false;
                 result = Utility.handleQuestionResponse(1,responseText,difficulty);
-                Log.d("测试222222",result.toString());
                 if (result){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Question question= DataSupport.findLast(Question.class);
-                            //Log.d("测试3333333",question.getDescription());
+                            Log.d("测试试题内容",question.getDescription());
                             textContent.setText(question.getDescription());
-                            textContent_A.setText(question.getA());
-                            textContent_B.setText(question.getB());
-                            textContent_C.setText(question.getC());
-                            textContent_D.setText(question.getD());
+                            radioButton_A.setText(question.getA());
+                            radioButton_B.setText(question.getB()) ;
+                            radioButton_C.setText(question.getC());
+                            radioButton_D.setText(question.getD());
                             correct_answer = question.getCorrect();
                         }
                     });

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "chinaykc.mobistudi"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -20,6 +20,11 @@ android {
     }
 }
 
+allprojects{
+    repositories{
+        maven{ url "https://jitpack.io"}
+    }
+}
 
 
 dependencies {
@@ -45,5 +50,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'org.litepal.android:core:1.4.1'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
     testCompile 'junit:junit:4.12'
 }
